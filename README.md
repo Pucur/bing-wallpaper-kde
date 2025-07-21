@@ -1,4 +1,4 @@
-Bing Wallpaper for Mac and Ubuntu
+Bing Wallpaper for KDE Plasma
 =================================
 
 Information
@@ -8,9 +8,7 @@ it to a directory.
 
 The script was tested on:
 
-- Mac OS X 10.8 - 10.12
-- Ubuntu 12.04 - 16.04
-- Arch 2022.01.01
+- Arch 6.15.7-arch1-1 KDE Plasma
 
 How to use?
 -----------
@@ -44,42 +42,20 @@ Options:
   --version                      Show version.
 ```
 
-Configuration on Mac
---------------------
-* Open Mac's `System Preferences` -> `Desktop & Screensaver`, add the wallpaper
-directory, and configure to taste.
-
-* To have the script run everyday automatically you will need to setup
-launchd. I have provided a sample plist file, found in the Tools
-directory, which can be copied to **$HOME/Library/LaunchAgents** and
-loaded with the command `launchctl load
-$HOME/Library/LaunchAgents/com.ideasftw.bing-wallpaper.plist`. Modify
-the plist as needed to point to **bing-wallpaper.sh**.
-
-Configuration on Ubuntu
+Configuration on KDE
 -----------------------
 **TL;DR:**
 
-* To install Gnome background slideshow, in the terminal run:
+* To install KDE background slideshow, in the terminal run:
 
 ```
-$ git clone git@github.com:thejandroman/bing-wallpaper.git
-$ bing-wallpaper/Tools/gnome-bing-slideshow/deploy-gnome-settings.sh
+$ git clone [git@github.com:thejandroman/bing-wallpaper.git](https://github.com/Pucur/bing-wallpaper-kde.git)
 ```
-
-* Register `bing-wallpaper/bing-random-pic.sh` to run regularly.
 
 * Change the background properties to use the new slideshow.
 
 **How to register bing-wallpaper.sh or bing-random-pic.sh to run regularly.**
 
-There are two ways to run the scipts regularly: cron jobs and startup
-applications.
-* Cron jobs:
-  * Change the path of **bing-wallpaper.sh** in **Tools/bing-cron** to the
-    desired script location. If left unchanged the default value is
-    **~/Pictures/bing-wallpaper.sh**.
-  * From the terminal run `crontab /path/to/bing-cron` to setup the cronjob.
 * Startup programs:
   * From HUD, search for startup applications.
   * Add **bing-random-pic.sh** or **bing-wallpaper.sh**.
