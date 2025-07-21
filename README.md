@@ -49,7 +49,7 @@ Configuration on KDE
 * To install KDE background slideshow, in the terminal run:
 
 ```
-$ git clone https://github.com/Pucur/bing-wallpaper-kde.git
+git clone https://github.com/Pucur/bing-wallpaper-kde.git
 ```
 
 * Change the background properties to use the new slideshow.
