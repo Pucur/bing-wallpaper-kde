@@ -42,7 +42,7 @@ print_message() {
 }
 
 # Defaults
-PICTURE_DIR="$HOME/Pictures/bing-wallpapers/"
+PICTURE_DIR="$HOME/Pictures/BingWallpaper/"
 RESOLUTION="1920x1080"
 
 # Option parsing
@@ -103,7 +103,7 @@ done
 # Create picture directory if it doesn't already exist
 mkdir -p "${PICTURE_DIR}"
 
-read -ra urls < <(curl -sL "$PROTO://www.bing.com/HPImageArchive.aspx?format=js&n=$BOOST" | \
+read -ra urls < <(curl -sL "$PROTO://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US" | \
     # Extract the image urls from the JSON response
     grep -Po '(?<=url":").*?(?=")' | \
     # Set the image resolution
@@ -126,8 +126,7 @@ for pic in "${urls[@]}"; do
     fi
 done
 
+
 if [ -n "$SET_WALLPAPER" ]; then
-    /usr/bin/osascript<<END
-tell application "System Events" to set picture of every desktop to ("$PICTURE_DIR/$filename" as POSIX file as alias)
-END
+plasma-apply-wallpaperimage $PICTURE_DIR/$filename
 fi
