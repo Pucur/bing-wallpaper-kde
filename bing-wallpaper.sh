@@ -3,11 +3,17 @@
 
 SCRIPT=$(basename "$0")
 readonly SCRIPT
+SET_WALLPAPER=true
 VERSION='0.5.0'
 readonly VERSION
 RESOLUTIONS=(UHD 1920x1200 1920x1080 800x480 400x240)
 readonly RESOLUTIONS
 
+echo "Waiting for internet connection..."
+until ping -c1 8.8.8.8 &>/dev/null; do
+    sleep 1
+done
+echo "Internet is up, continuing..."
 usage() {
 cat <<EOF
 Usage:
@@ -42,7 +48,7 @@ print_message() {
 }
 
 # Defaults
-PICTURE_DIR="$HOME/Pictures/BingWallpaper/"
+PICTURE_DIR="$HOME/Pictures/BingWallpaper"
 RESOLUTION="1920x1080"
 
 # Option parsing
@@ -112,21 +118,21 @@ read -ra urls < <(curl -sL "$PROTO://www.bing.com/HPImageArchive.aspx?format=js&
     sed -e "s/\(.*\)/${PROTO}\:\/\/www.bing.com\1/" | \
     tr "\n" " ")
 
-for pic in "${urls[@]}"; do
-    if [ -z "$FILENAME" ]; then
-        filename=$(echo "$pic" | sed -e 's/.*[?&;]id=\([^&]*\).*/\1/' | grep -oe '[^\.]*\.[^\.]*$')
-    else
-        filename="$FILENAME"
-    fi
-    if [ -n "$FORCE" ] || [ ! -f "$PICTURE_DIR/$filename" ]; then
-        print_message "Downloading: $filename..."
-        curl $CURL_QUIET -Lo "$PICTURE_DIR/$filename" "$pic"
-    else
-        print_message "Skipping: $filename..."
-    fi
-done
+pic="${urls[0]}"
 
+if [ -z "$FILENAME" ]; then
+    filename=$(echo "$pic" | sed -e 's/.*[?&;]id=\([^&]*\).*/\1/' | grep -oe '[^\.]*\.[^\.]*$')
+else
+    filename="$FILENAME"
+fi
+
+if [ -n "$FORCE" ] || [ ! -f "$PICTURE_DIR/$filename" ]; then
+    print_message "Downloading: $filename..."
+    curl $CURL_QUIET -Lo "$PICTURE_DIR/$filename" "$pic"
+else
+    print_message "Skipping: $filename..."
+fi
 
 if [ -n "$SET_WALLPAPER" ]; then
-plasma-apply-wallpaperimage $PICTURE_DIR/$filename
+    plasma-apply-wallpaperimage "$PICTURE_DIR/$filename"
 fi
