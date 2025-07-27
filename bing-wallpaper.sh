@@ -8,7 +8,7 @@ VERSION='0.5.0'
 readonly VERSION
 RESOLUTIONS=(UHD 1920x1200 1920x1080 800x480 400x240)
 readonly RESOLUTIONS
-
+DATE=$(date +%Y%m%d)
 echo "Waiting for internet connection..."
 until ping -c1 8.8.8.8 &>/dev/null; do
     sleep 1
@@ -125,6 +125,8 @@ if [ -z "$FILENAME" ]; then
 else
     filename="$FILENAME"
 fi
+
+filename="${DATE}-${filename}"
 
 if [ -n "$FORCE" ] || [ ! -f "$PICTURE_DIR/$filename" ]; then
     print_message "Downloading: $filename..."
