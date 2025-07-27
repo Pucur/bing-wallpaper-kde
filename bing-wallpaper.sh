@@ -49,7 +49,7 @@ print_message() {
 
 # Defaults
 PICTURE_DIR="$HOME/Pictures/BingWallpaper"
-RESOLUTION="1920x1080"
+RESOLUTION="UHD"
 
 # Option parsing
 BOOST=1
